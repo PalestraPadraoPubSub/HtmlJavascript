@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.12.0.js"></script>
+		<script>
+			var pubnub = new PubNub({
+			    subscribeKey: "sub-c-c5dee452-6049-11e7-b272-02ee2ddab7fe",
+			    publishKey: "pub-c-128c8884-d4b7-4c72-bfd5-273a0a73c35c",
+			    ssl: false
+			});
+
+			pubnub.addListener({
+    
+			    message: function(m) {
+			        // handle message
+			        console.log("chegou mensagem");
+			        document.getElementById('valor').innerHTML = m.message;
+			        var msg = m.message; // The Payload
+			        console.log(msg);
+			    },
+			    presence: function(p) {},
+			    status: function(s) {
+			    	var category = s.category; //PNConnectedCategory
+			        var operation = s.operation; //PNSubscribeOperation
+			        var affectedChannels = s.affectedChannels; //The channels affected in the operation, of type array.
+			        var subscribedChannels = s.subscribedChannels; //All the current subscribed channels, of type array.
+			        var affectedChannelGroups = s.affectedChannelGroups; //The channel groups affected in the operation, of type array.
+			        console.log(category);
+			    	console.log(operation);
+			    	console.log(category);
+			    	console.log(affectedChannels);
+			    	console.log(subscribedChannels);
+			    }
+			});
+
+			pubnub.subscribe({
+			    channels: ['luzes_arduino'],
+			});
+		</script>
+	</head>
+	<body>
+	<h1>Luz: </h1>
+	<h2 id='valor'></h2>
+	</body>
+</html>
